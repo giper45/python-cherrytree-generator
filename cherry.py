@@ -24,7 +24,7 @@ def newtext_str(t):
     return "<rich_text>{}</rich_text>".format(t)
 
 def newtext(t):
-    return ET.fromstring(newtext_str(l))
+    return ET.fromstring(newtext_str(t))
     
 def new_link(l):
     return ET.fromstring(newlink_str(l))
@@ -71,4 +71,10 @@ def addnode(ct, parent_name, newnode_name):
     parent = getnode(new_ct, parent_name)
     newnode_ele = newnode(newnode_name)
     parent.append(newnode_ele)
+    return new_ct
+
+def add_ele(ct, node_name, newele):
+    new_ct = copy.deepcopy(ct)
+    the_node = getnode(new_ct, node_name)
+    the_node.append(newele)
     return new_ct
