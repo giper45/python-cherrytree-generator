@@ -1,9 +1,35 @@
 # python-cherrytree-generator
-A cherry tree dtd xml generator, useful to script cherrytree generation during activities.
+Cherry-tree is a wonderful tool used to take notes. Is is commonly used during Penetration Testing activities. 
+This project is a simple Python API that creates dtd cherry tree files (basically, xml files). 
+It can be useful to use cherrytree in automation steps.
 
 
 ## Usage   
 See `test` and `example` to see how it works:      
+` git clone https://github.com/giper45/python-cherrytree-generator`
+
+### Quick example:    
+```   
+from cherry import *
+from os import path
+DIR_EXAMPLE = "examples"
+FIRST_EXAMPLE = path.join(DIR_EXAMPLE, "first.ctd")
+ct = newdoc("root")
+ct = addnode(ct, "root", "192.168.1.1")
+ct = addnode(ct, "root", "192.168.1.2")
+
+ct = addnode(ct, "192.168.1.1", "22 dropbear ssh")
+ct = addnode(ct, "192.168.1.1", "21 pureFTPd")
+
+link = new_link("https://google.com")
+text = newtext("Hello world")
+
+ct = add_ele(ct, "192.168.1.1", text)
+ct = add_ele(ct, "192.168.1.2", link)
+
+create(ct, FIRST_EXAMPLE)
+
+``` 
 ## API   
 ### open(filename)   
 Open a ctd element
@@ -31,25 +57,11 @@ Add a new element to cherry tree document
 Add a new node to parent   
 
 
-### Quick example:    
-```   
-from cherry import *
-from os import path
-DIR_EXAMPLE = "examples"
-FIRST_EXAMPLE = path.join(DIR_EXAMPLE, "first.ctd")
-ct = newdoc("root")
-ct = addnode(ct, "root", "192.168.1.1")
-ct = addnode(ct, "root", "192.168.1.2")
+## Contributing
 
-ct = addnode(ct, "192.168.1.1", "22 dropbear ssh")
-ct = addnode(ct, "192.168.1.1", "21 pureFTPd")
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
 
-link = new_link("https://google.com")
-text = newtext("Hello world")
-
-ct = add_ele(ct, "192.168.1.1", text)
-ct = add_ele(ct, "192.168.1.2", link)
-
-create(ct, FIRST_EXAMPLE)
-
-``` 
