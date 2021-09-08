@@ -35,11 +35,11 @@ def newimg_str(l):
 def newimg(l):
     return ET.fromstring(newimg_str(l))
 
-def newnode_str(name, ts):
-    return '<node name="{}" unique_id="1" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="{}" ts_lastsave="{}"></node>'.format(name, ts, ts)
+def newnode_str(name, ts, id = 1):
+    return '<node name="{}" unique_id="{}" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="{}" ts_lastsave="{}"></node>'.format(name, id, ts, ts)
 
-def newnode(l):
-    return ET.fromstring(newnode_str(l, timestamp()))
+def newnode(l, id = 1):
+    return ET.fromstring(newnode_str(l, timestamp(), id))
 
 def newdoc(root_name):
     root = ET.fromstring(base_cherry)
@@ -69,7 +69,9 @@ def getnode(ct, name):
 def addnode(ct, parent_name, newnode_name):
     new_ct = copy.deepcopy(ct)
     parent = getnode(new_ct, parent_name)
-    newnode_ele = newnode(newnode_name)
+    current_ids = ids(ct)
+    new_id_instance = new_id(current_ids)
+    newnode_ele = newnode(newnode_name, new_id_instance)
     parent.append(newnode_ele)
     return new_ct
 
